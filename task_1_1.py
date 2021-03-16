@@ -10,9 +10,9 @@ N = 100
 
 first_weight = list()
 
-first_weight.append(sys.getrefcount(DEFAULT_START_NUM))
-first_weight.append(sys.getrefcount(DEFAULT_START_SUMMA))
-first_weight.append(sys.getrefcount(N))
+first_weight.append(sys.getsizeof(DEFAULT_START_NUM))
+first_weight.append(sys.getsizeof(DEFAULT_START_SUMMA))
+first_weight.append(sys.getsizeof(N))
 
 
 def one_func(count, start_num, sum_):
@@ -20,52 +20,56 @@ def one_func(count, start_num, sum_):
     count -= 1
     sum_ += result
 
-    first_weight.append(sys.getrefcount(result))
-    first_weight.append(sys.getrefcount(count))
-    first_weight.append(sys.getrefcount(sum_))
+    first_weight.append(sys.getsizeof(result))
+    first_weight.append(sys.getsizeof(count))
+    first_weight.append(sys.getsizeof(sum_))
 
     if count == 0:
         return f'{result}\nСумма последовательности: {sum_}'
     return f'{result}, {one_func(count, result, sum_)}'
 
+
 print(one_func(N, DEFAULT_START_NUM, DEFAULT_START_SUMMA))
-print(sum(first_weight))  # 1844
+print(sum(first_weight))  # 7676
 
 #############################################################################
 
 second_weight = list()
 
-second_weight.append(sys.getrefcount(N))
+second_weight.append(sys.getsizeof(N))
+
 
 def two_func(n):
     array = [1]
     for _ in range(n - 1):
         array.append(array[-1] / -2)
-    second_weight.append(sys.getrefcount(array))
+    second_weight.append(sys.getsizeof(array))
     return sum(array)
 
+
 print(two_func(N))
-print(sum(second_weight))  # 7
+print(sum(second_weight))  # 956
 
 ##############################################################################
 
 third_weight = list()
 
-third_weight.append(sys.getrefcount(N))
+third_weight.append(sys.getsizeof(N))
+
 
 def three_func(n):
     array = [1 / (-2)**i for i in range(n)]
     sum_ = 0
     for num in array:
         sum_ += num
-        third_weight.append(sys.getrefcount(num))
-    third_weight.append(sys.getrefcount(array))
-    third_weight.append(sys.getrefcount(sum_))
+        third_weight.append(sys.getsizeof(num))
+    third_weight.append(sys.getsizeof(array))
+    third_weight.append(sys.getsizeof(sum_))
     return sum_
 
 
 print(three_func(N))
-print(sum(third_weight))  # 309
+print(sum(third_weight))  # 3364
 
 
 '''

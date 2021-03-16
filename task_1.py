@@ -8,19 +8,19 @@ DEFAULT_NUM_FOR_DIVISION = 10
 
 first_weight = list()
 
-first_weight.append(sys.getrefcount(user_answer))
-first_weight.append(sys.getrefcount(DEFAULT_NUM_FOR_DIVISION))
+first_weight.append(sys.getsizeof(user_answer))
+first_weight.append(sys.getsizeof(DEFAULT_NUM_FOR_DIVISION))
 
 
 def func(number):
     if number < DEFAULT_NUM_FOR_DIVISION:
         return f'{number}'
-    first_weight.append(sys.getrefcount(number))
+    first_weight.append(sys.getsizeof(number))
     return f'{number % DEFAULT_NUM_FOR_DIVISION}{func(number // DEFAULT_NUM_FOR_DIVISION)}'
 
 
 print(int(func(user_answer)))
-print(sum(first_weight))  # 42
+print(sum(first_weight))  # 112
 
 
 ##############################################################################################
@@ -28,26 +28,26 @@ print(sum(first_weight))  # 42
 second_weight = list()
 
 user_answer = input('Введите натуральное число для вывода его отражения: ')
-second_weight.append(sys.getrefcount(user_answer))
+second_weight.append(sys.getsizeof(user_answer))
 
 print(int(user_answer[::-1]))
 
-print(sum(second_weight))  # 2
+print(sum(second_weight))  # 52
 
 ##############################################################################################
 
 third_weight = list()
 
 user_answer = list(input('Введите натуральное число для вывода его отражения: '))
-third_weight.append(sys.getrefcount(user_answer))
+third_weight.append(sys.getsizeof(user_answer))
 
 user_answer.reverse()
 result = ''.join(user_answer)
 
-third_weight.append(sys.getrefcount(result))
+third_weight.append(sys.getsizeof(result))
 
 print(int(result))
-print(sum(third_weight))  # 4
+print(sum(third_weight))  # 164
 
 '''
 Python 3.8.8 (tags/v3.8.8:024d805, Feb 19 2021, 13:18:16) [MSC v.1928 64 bit (AMD64)] on win32
