@@ -15,23 +15,25 @@ def merge(arr):
 
     a = merge(arr[:count // 2])
     b = merge(arr[count // 2:])
+    a_len = len(a)
+    b_len = len(b)
     m_list = a + b
 
     a_i = b_i = 0
     sort_arr = []
 
     for _ in range(len(m_list)):
-        if a_i < len(a) and b_i < len(b):
+        if a_i < a_len and b_i < b_len:
             if a[a_i] <= b[b_i]:
                 sort_arr.append(a[a_i])
                 a_i += 1
             else:
                 sort_arr.append(b[b_i])
                 b_i += 1
-        elif a_i == len(a):
+        elif a_i == a_len:
             sort_arr.append(b[b_i])
             b_i += 1
-        elif b_i == len(b):
+        elif b_i == b_len:
             sort_arr.append(a[a_i])
             a_i += 1
     return sort_arr
